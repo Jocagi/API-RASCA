@@ -2,6 +2,7 @@ package com.rasca.rascaapi.repositories;
 
 import com.rasca.rascaapi.domain.User;
 import com.rasca.rascaapi.exceptions.EtAuthException;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
@@ -31,6 +32,8 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public Integer create(String firstName, String lastName, String email, String password) throws EtAuthException {
+        //Hashear password
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
         try{
             //Conexión a base de datos y preparación de query
             KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -39,7 +42,7 @@ public class UserRepositoryImpl implements UserRepository{
                 ps.setString(1,firstName);
                 ps.setString(2,lastName);
                 ps.setString(3,email);
-                ps.setString(4,password);
+                ps.setString(4,hashedPassword);
                 return ps;
             }, keyHolder);
             //Devolver id de usuario.
@@ -53,7 +56,7 @@ public class UserRepositoryImpl implements UserRepository{
     public User findByEmailAndPassword(String email, String password) throws EtAuthException {
         try{
             User user = jdbcTemplate.queryForObject(SQL_FIND_BY_EMAIL, new Object[]{email}, userRowMapper);
-            if(!password.equals(user.getPassword()))
+            if(!BCrypt.checkpw(password,user.getPassword()))
                 throw new EtAuthException("Email/password invalidos");
             return user;
         }catch (Exception e){
