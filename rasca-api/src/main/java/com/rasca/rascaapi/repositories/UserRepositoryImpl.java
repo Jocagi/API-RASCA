@@ -15,12 +15,17 @@ import java.sql.Statement;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository{
+    //? = PARAMETRO
     //String de query de insercion a base de datos
     private static final String SQL_CREATE = "INSERT INTO RASCA_USERS(USER_ID, FIRST_NAME, LAST_NAME, EMAIL,PASSWORD) VALUES(NEXTVAL('RASCA_USERS_SEQ'),?,?,?,?)";
     //String de query de CANTIDAD DE USUARIOS a base de datos
     private static final String SQL_COUNT_BY_EMAIL = "SELECT COUNT(*) FROM RASCA_USERS WHERE EMAIL = ?";
     //String de query de BUSQUEDA DE USUARIO POR ID a base de datos
     private static final String SQL_FIND_BY_ID = "SELECT USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD FROM RASCA_USERS WHERE USER_ID = ?";
+    //String de query para BUSQUEDA DE USUARIO POR LOGIN en bd
+    private static final String SQL_FIND_BY_EMAIL = "SELECT USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD FROM RASCA_USERS WHERE EMAIL = ?";
+
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -46,7 +51,14 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public User findByEmailAndPassword(String email, String password) throws EtAuthException {
-        return null;
+        try{
+            User user = jdbcTemplate.queryForObject(SQL_FIND_BY_EMAIL, new Object[]{email}, userRowMapper);
+            if(!password.equals(user.getPassword()))
+                throw new EtAuthException("Email/password invalidos");
+            return user;
+        }catch (Exception e){
+            throw new EtAuthException("Email/password invalidos");
+        }
     }
 
     @Override
