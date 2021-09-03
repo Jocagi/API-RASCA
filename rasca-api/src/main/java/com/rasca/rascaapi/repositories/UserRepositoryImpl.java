@@ -18,13 +18,13 @@ import java.sql.Statement;
 public class UserRepositoryImpl implements UserRepository{
     //? = PARAMETRO
     //String de query de insercion a base de datos
-    private static final String SQL_CREATE = "INSERT INTO RASCA_USERS(USER_ID, FIRST_NAME, LAST_NAME, EMAIL,PASSWORD) VALUES(NEXTVAL('RASCA_USERS_SEQ'),?,?,?,?)";
+    private static final String SQL_CREATE = "INSERT INTO Persona(IDPersona, Correo, Contrasena, Usuario, Nombres, Apellidos, Carnet, FechaNac, Telefono, Fotografia) VALUES(NEXTVAL('RASCA_USERS_SEQ'), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     //String de query de CANTIDAD DE USUARIOS a base de datos
-    private static final String SQL_COUNT_BY_EMAIL = "SELECT COUNT(*) FROM RASCA_USERS WHERE EMAIL = ?";
+    private static final String SQL_COUNT_BY_EMAIL = "SELECT COUNT(*) FROM Persona WHERE Correo = ?";
     //String de query de BUSQUEDA DE USUARIO POR ID a base de datos
-    private static final String SQL_FIND_BY_ID = "SELECT USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD FROM RASCA_USERS WHERE USER_ID = ?";
+    private static final String SQL_FIND_BY_ID = "SELECT IDPersona, Correo, Contrasena, Usuario, Nombres, Apellidos, Carnet, FechaNac, Telefono, Fotografia FROM Persona WHERE IDPersona = ?";
     //String de query para BUSQUEDA DE USUARIO POR LOGIN en bd
-    private static final String SQL_FIND_BY_EMAIL = "SELECT USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD FROM RASCA_USERS WHERE EMAIL = ?";
+    private static final String SQL_FIND_BY_EMAIL = "SELECT IDPersona, Correo, Contrasena, Usuario, Nombres, Apellidos, Carnet, FechaNac, Telefono, Fotografia FROM Persona WHERE Correo = ?";
 
 
     @Autowired
