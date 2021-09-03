@@ -34,17 +34,4 @@ public class UserServiceImpl implements UserService{
         Long IDPersona = userRepository.create(Correo,Contrasena,Usuario,Nombres,Apellidos,Carnet,FechaNac,Telefono,Fotografia);
         return userRepository.findByID(IDPersona);
     }
-/*
-    @Override
-    public User registerUser(String firstName, String lastName, String email, String password) throws EtAuthException {
-        Pattern pattern =Pattern.compile("^(.+)@(.+)$");
-        if (email != null) email = email.toLowerCase();
-        if(!pattern.matcher(email).matches())
-            throw new EtAuthException("Email inválido");
-        Integer count = userRepository.getCountByEmail(email);
-        if(count > 0)
-            throw new EtAuthException("Email ya registrado");
-        Integer userId = userRepository.create(firstName, lastName, email, password);
-        return userRepository.findByID(userId);
-    }*/
 }

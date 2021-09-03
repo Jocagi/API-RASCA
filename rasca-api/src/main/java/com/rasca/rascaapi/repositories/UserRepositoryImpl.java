@@ -33,28 +33,7 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-/*
-    @Override
-    public Integer create(String firstName, String lastName, String email, String password) throws EtAuthException {
-        //Hashear password
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
-        try{
-            //Conexión a base de datos y preparación de query
-            KeyHolder keyHolder = new GeneratedKeyHolder();
-            jdbcTemplate.update(connection ->{
-                PreparedStatement ps = connection.prepareStatement(SQL_CREATE, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1,firstName);
-                ps.setString(2,lastName);
-                ps.setString(3,email);
-                ps.setString(4,hashedPassword);
-                return ps;
-            }, keyHolder);
-            //Devolver id de usuario.
-            return (Integer) keyHolder.getKeys().get("USER_ID");
-        }catch(Exception e){
-            throw new EtAuthException("Datos invalidos, fallo al crear cuenta");
-        }
-    }*/
+
 
     @Override
     public Long create(String Correo, String Contrasena, String Usuario, String Nombres, String Apellidos, String Carnet, String FechaNac, String Telefono, String Fotografia) throws EtAuthException {
