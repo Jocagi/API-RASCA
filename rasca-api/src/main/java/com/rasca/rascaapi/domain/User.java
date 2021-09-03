@@ -3,7 +3,7 @@ package com.rasca.rascaapi.domain;
 import java.util.Date;
 
 public class User {
-    private Integer IDPersona;
+    private Long IDPersona;
     private String Correo;
     private String Contrasena;
     private String Usuario;
@@ -14,7 +14,7 @@ public class User {
     private String Telefono;
     private String Fotografia;
 
-    public void setIDPersona(Integer IDPersona) {
+    public void setIDPersona(Long IDPersona) {
         this.IDPersona = IDPersona;
     }
 
@@ -54,7 +54,7 @@ public class User {
         Fotografia = fotografia;
     }
 
-    public Integer getIDPersona() {
+    public Long getIDPersona() {
         return IDPersona;
     }
 
@@ -94,7 +94,7 @@ public class User {
         return Fotografia;
     }
 
-    public User(Integer IDPersona, String Correo, String Contrasena, String Usuario, String Nombres, String Apellidos, String Carnet, String FechaNac, String Telefono, String Fotografia) {
+    public User(Long IDPersona, String Correo, String Contrasena, String Usuario, String Nombres, String Apellidos, String Carnet, String FechaNac, String Telefono, String Fotografia) {
         this.IDPersona = IDPersona;
         this.Correo = Correo;
         this.Contrasena = Contrasena;

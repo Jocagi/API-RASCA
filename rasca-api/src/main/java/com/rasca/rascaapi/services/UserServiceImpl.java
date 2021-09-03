@@ -28,10 +28,10 @@ public class UserServiceImpl implements UserService{
         if (Correo != null) Correo = Correo.toLowerCase();
         if(!pattern.matcher(Correo).matches())
             throw new EtAuthException("Email inválido");
-        Integer count = userRepository.getCountByEmail(Correo);
+        Long count = userRepository.getCountByEmail(Correo);
         if(count > 0)
             throw new EtAuthException("Email ya registrado");
-        Integer IDPersona = userRepository.create(Correo,Contrasena,Usuario,Nombres,Apellidos,Carnet,FechaNac,Telefono,Fotografia);
+        Long IDPersona = userRepository.create(Correo,Contrasena,Usuario,Nombres,Apellidos,Carnet,FechaNac,Telefono,Fotografia);
         return userRepository.findByID(IDPersona);
     }
 /*
