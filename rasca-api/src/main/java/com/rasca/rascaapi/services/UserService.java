@@ -5,8 +5,8 @@ import com.rasca.rascaapi.exceptions.EtAuthException;
 
 public interface UserService {
 
-    User validateUser(String email, String password) throws EtAuthException;
+    User validateUser(String correo, String contraseña) throws EtAuthException;
 
-    User registerUser(String firstName, String lastName, String email, String password) throws EtAuthException;
+    User registerUser(String Correo, String Contrasena,String Usuario,String Nombres,String Apellidos, String Carnet, String FechaNac, String Telefono, String Fotografia ) throws EtAuthException;
 
 }
