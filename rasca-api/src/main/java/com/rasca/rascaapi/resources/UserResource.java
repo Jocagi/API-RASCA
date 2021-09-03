@@ -21,9 +21,9 @@ public class UserResource {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> login(@RequestBody Map<String,Object> userMap) {
-        String email = (String) userMap.get("email");
-        String password = (String) userMap.get("password");
-        User user = userService.validateUser(email,password);
+        String Correo = (String) userMap.get("Correo");
+        String Contraseña = (String) userMap.get("Contraseña");
+        User user = userService.validateUser(Correo,Contraseña);
         Map<String,String> map = new HashMap<>();
         map.put("message", "Log in exitoso");
         return new ResponseEntity<>(map, HttpStatus.OK);
@@ -32,11 +32,16 @@ public class UserResource {
 
         @PostMapping("/register")
     public ResponseEntity<Map<String,String>> registerUser(@RequestBody Map<String,Object> userMap){
-        String firstName = (String) userMap.get("firstName");
-        String lastName = (String) userMap.get("lastName");
-        String email = (String) userMap.get("email");
-        String password = (String) userMap.get("password");
-        User user = userService.registerUser(firstName,lastName,email,password);
+        String Correo = (String) userMap.get("Correo");
+        String Contrasena = (String) userMap.get("Contrasena");
+        String Usuario = (String) userMap.get("Usuario");
+        String Nombres = (String) userMap.get("Nombres");
+        String Apellidos = (String) userMap.get("Apellidos");
+        String Carnet = (String) userMap.get("Carnet");
+        String FechaNac = (String) userMap.get("FechaNac");
+        String Telefono = (String) userMap.get("Telefono");
+        String Fotografia = (String) userMap.get("Fotografia");
+        User user = userService.registerUser(Correo, Contrasena, Usuario, Nombres, Apellidos, Carnet, FechaNac, Telefono, Fotografia);
         Map<String,String> map = new HashMap<>();
         map.put("message", "Registrado exitosamente");
         return new ResponseEntity<>(map, HttpStatus.OK);
