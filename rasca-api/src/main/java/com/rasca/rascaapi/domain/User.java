@@ -94,6 +94,19 @@ public class User {
         return Fotografia;
     }
 
+    public User(Integer IDPersona, String Correo, String Contrasena, String Usuario, String Nombres, String Apellidos, String Carnet, String FechaNac, String Telefono, String Fotografia) {
+        this.IDPersona = IDPersona;
+        this.Correo = Correo;
+        this.Contrasena = Contrasena;
+        this.Usuario = Usuario;
+        this.Nombres = Nombres;
+        this.Apellidos=Apellidos;
+        this.Carnet=Carnet;
+        this.FechaNac=FechaNac;
+        this.Telefono=Telefono;
+        this.Fotografia=Fotografia;
+    }
+
     /*
     public User(Integer userId, String firstName, String lastName, String email, String password) {
         this.userId = userId;
