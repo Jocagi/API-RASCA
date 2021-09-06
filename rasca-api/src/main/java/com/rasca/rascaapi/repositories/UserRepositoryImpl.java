@@ -30,6 +30,11 @@ public class UserRepositoryImpl implements UserRepository{
     //String de query para BUSQUEDA DE USUARIO POR LOGIN en bd
     private static  String SQL_FIND_BY_EMAIL = "SELECT \"IDPersona\", \"Correo\", \"Contrasena\", \"Usuario\", \"Nombres\", \"Apellidos\", \"Carnet\", \"FechaNac\", \"Telefono\", \"Fotografia\" FROM \"Persona\" WHERE \"Correo\" = ?";
 
+    private static  String SQL_CREATE_STUDENT = "INSERT INTO \"Estudiante\" (\"IDEstudiante\", \"IDPersona\", \"IDCarrera\", \"IDBeca\") VALUES(NEXTVAL('RASCA_ESTUDIANTE_SEQ'), ?, 1, 1)";
+
+    private static  String SQL_CREATE_APPROVER = "INSERT INTO \"Certificador\" (\"IDCertificador\", \"IDCargo\", \"IDPersona\") VALUES(NEXTVAL('RASCA_CERTIFICADOR_SEQ'), 1, ?)";
+
+    private static  String SQL_CREATE_ADMINISTRATOR = "INSERT INTO \"Administrador\" (\"IDAdministrador\", \"IDPersona\", \"IDCargo\") VALUES(NEXTVAL('RASCA_ADMINISTRADO_SEQ'), ?, 1)";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -87,6 +92,57 @@ public class UserRepositoryImpl implements UserRepository{
     public User findByID(Long userId) {
 
         return jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[]{userId}, userRowMapper);
+    }
+
+    @Override
+    public Long createStudent(Long IDPersona) {
+        try{
+            //Conexión a base de datos y preparación de query
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            jdbcTemplate.update(connection ->{
+                PreparedStatement ps = connection.prepareStatement(SQL_CREATE_STUDENT, Statement.RETURN_GENERATED_KEYS);
+                ps.setLong(1,IDPersona);
+                return ps;
+            }, keyHolder);
+            //Devolver id de usuario.
+            return (Long) keyHolder.getKeys().get("IDEstudiante");
+        }catch(Exception e) {
+            throw new EtAuthException("Datos invalidos, fallo al crear cuenta");
+        }
+    }
+
+    @Override
+    public String createApprover(Long IDPersona) {
+        try{
+            //Conexión a base de datos y preparación de query
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            jdbcTemplate.update(connection ->{
+                PreparedStatement ps = connection.prepareStatement(SQL_CREATE_APPROVER, Statement.RETURN_GENERATED_KEYS);
+                ps.setLong(1,IDPersona);
+                return ps;
+            }, keyHolder);
+            //Devolver id de usuario.
+            return (String) keyHolder.getKeys().get("IDCertificador");
+        }catch(Exception e) {
+            throw new EtAuthException("Datos invalidos, fallo al crear cuenta");
+        }
+    }
+
+    @Override
+    public Long createAdministrator(Long IDPersona) {
+        try{
+            //Conexión a base de datos y preparación de query
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            jdbcTemplate.update(connection ->{
+                PreparedStatement ps = connection.prepareStatement(SQL_CREATE_ADMINISTRATOR, Statement.RETURN_GENERATED_KEYS);
+                ps.setLong(1,IDPersona);
+                return ps;
+            }, keyHolder);
+            //Devolver id de usuario.
+            return (Long) keyHolder.getKeys().get("IDAdministrador");
+        }catch(Exception e) {
+            throw new EtAuthException("Datos invalidos, fallo al crear cuenta");
+        }
     }
 
     //Logica para obtener datos de la base de datos segun ID de Usuario

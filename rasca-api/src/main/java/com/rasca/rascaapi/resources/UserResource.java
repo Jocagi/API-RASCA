@@ -41,7 +41,8 @@ public class UserResource {
         String FechaNac = (String) userMap.get("FechaNac");
         String Telefono = (String) userMap.get("Telefono");
         String Fotografia = (String) userMap.get("Fotografia");
-        User user = userService.registerUser(Correo, Contrasena, Usuario, Nombres, Apellidos, Carnet, FechaNac, Telefono, Fotografia);
+        String Rol = (String)userMap.get("Rol");
+        User user = userService.registerUser(Correo, Contrasena, Usuario, Nombres, Apellidos, Carnet, FechaNac, Telefono, Fotografia, Rol);
         Map<String,String> map = new HashMap<>();
         map.put("message", "Registrado exitosamente");
         return new ResponseEntity<>(map, HttpStatus.OK);

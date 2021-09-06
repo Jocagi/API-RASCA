@@ -13,4 +13,10 @@ public interface UserRepository {
     Long getCountByEmail(String Correo);
 
     User findByID(Long IDPersona);
+
+    Long createStudent(Long IDPersona);
+
+    String createApprover(Long IDPersona);
+
+    Long createAdministrator(Long IDPersona);
 }
