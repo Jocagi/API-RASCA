@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService{
             Long IDEstudiante = userRepository.createStudent(IDPersona);
         }
         else if (Rol.equals("Certificador")){
-            Long IDCertificador = userRepository.createApprover(IDPersona);
+            String IDCertificador = userRepository.createApprover(IDPersona);
         }
         else if(Rol.equals("Administrador")){
             Long IDAdministrador = userRepository.createAdministrator(IDPersona);

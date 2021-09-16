@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ActivityResource {
     @GetMapping("")
     public String getAllActivities(HttpServletRequest request){
-        int userId = (Integer) request.getAttribute("userId");
+        int userId = (Integer) request.getAttribute("IDPersona");
         return "Usuario Autenticado! UserId: " + userId;
     }
 }
