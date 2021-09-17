@@ -30,11 +30,11 @@ public class UserRepositoryImpl implements UserRepository{
     //String de query para BUSQUEDA DE USUARIO POR LOGIN en bd
     private static  String SQL_FIND_BY_EMAIL = "SELECT \"IDPersona\", \"Correo\", \"Contrasena\", \"Usuario\", \"Nombres\", \"Apellidos\", \"Carnet\", \"FechaNac\", \"Telefono\", \"Fotografia\" FROM \"Persona\" WHERE \"Correo\" = ?";
 
-    private static  String SQL_CREATE_STUDENT = "INSERT INTO \"Estudiante\" (\"IDEstudiante\", \"IDPersona\", \"IDCarrera\", \"IDBeca\") VALUES(NEXTVAL('RASCA_ESTUDIANTE_SEQ'), ?, 1, 1)";
+    private static  String SQL_CREATE_STUDENT = "INSERT INTO \"Estudiante\" (\"IDEstudiante\", \"IDPersona\", \"IDCarrera\", \"IDBeca\") VALUES(NEXTVAL('RASCA_ESTUDIANTE_SEQ'), ?, ?, ?)";
 
-    private static  String SQL_CREATE_APPROVER = "INSERT INTO \"Certificador\" (\"IDCertificador\", \"IDCargo\", \"IDPersona\") VALUES(NEXTVAL('RASCA_CERTIFICADOR_SEQ'), 1, ?)";
+    private static  String SQL_CREATE_APPROVER = "INSERT INTO \"Certificador\" (\"IDCertificador\", \"IDCargo\", \"IDPersona\") VALUES(NEXTVAL('RASCA_CERTIFICADOR_SEQ'), ?, ?)";
 
-    private static  String SQL_CREATE_ADMINISTRATOR = "INSERT INTO \"Administrador\" (\"IDAdministrador\", \"IDPersona\", \"IDCargo\") VALUES(NEXTVAL('RASCA_ADMINISTRADO_SEQ'), ?, 1)";
+    private static  String SQL_CREATE_ADMINISTRATOR = "INSERT INTO \"Administrador\" (\"IDAdministrador\", \"IDPersona\", \"IDCargo\") VALUES(NEXTVAL('RASCA_ADMINISTRADO_SEQ'), ?, ?)";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -95,13 +95,15 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public Long createStudent(Long IDPersona) {
+    public Long createStudent(Long IDPersona, String IDCarrera, String IDBeca) {
         try{
             //Conexión a base de datos y preparación de query
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(connection ->{
                 PreparedStatement ps = connection.prepareStatement(SQL_CREATE_STUDENT, Statement.RETURN_GENERATED_KEYS);
                 ps.setLong(1,IDPersona);
+                ps.setLong(2,Long.parseLong(IDCarrera));
+                ps.setLong(3,Long.parseLong(IDBeca));
                 return ps;
             }, keyHolder);
             //Devolver id de usuario.
@@ -112,13 +114,14 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public String createApprover(Long IDPersona) {
+    public String createApprover(Long IDPersona, String IDCargo) {
         try{
             //Conexión a base de datos y preparación de query
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(connection ->{
                 PreparedStatement ps = connection.prepareStatement(SQL_CREATE_APPROVER, Statement.RETURN_GENERATED_KEYS);
-                ps.setLong(1,IDPersona);
+                ps.setLong(2,IDPersona);
+                ps.setLong(1,Long.parseLong(IDCargo));
                 return ps;
             }, keyHolder);
             //Devolver id de usuario.
@@ -129,13 +132,14 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public Long createAdministrator(Long IDPersona) {
+    public Long createAdministrator(Long IDPersona, String IDCargo) {
         try{
             //Conexión a base de datos y preparación de query
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(connection ->{
                 PreparedStatement ps = connection.prepareStatement(SQL_CREATE_ADMINISTRATOR, Statement.RETURN_GENERATED_KEYS);
                 ps.setLong(1,IDPersona);
+                ps.setLong(2,Long.parseLong(IDCargo));
                 return ps;
             }, keyHolder);
             //Devolver id de usuario.
