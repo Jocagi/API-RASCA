@@ -16,6 +16,9 @@ public class Activities {
     private String ID_Certificador;
     private String ID_Administrador;
 
+    public Activities(long id_actividad, String nombre, int cupo, java.sql.Date fecha_inicio, String estado, String descripcion, int horas_otorgadas, String r_facultad, String r_year, String r_beca, String id_certificador, long id_administrador) {
+    }
+
     public Long getID_Actividad() {
         return ID_Actividad;
     }
