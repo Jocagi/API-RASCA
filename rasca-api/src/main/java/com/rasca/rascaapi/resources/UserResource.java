@@ -28,7 +28,7 @@ public class UserResource {
         String Correo = (String) userMap.get("Correo");
         String Contrasena = (String) userMap.get("Contrasena");
         User user = userService.validateUser(Correo,Contrasena);      
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(generateJWTToken(user),HttpStatus.OK);
     }
 
         @PostMapping("/register")
