@@ -2,6 +2,7 @@ package com.rasca.rascaapi.repositories;
 
 import com.rasca.rascaapi.domain.User;
 import com.rasca.rascaapi.exceptions.EtAuthException;
+import com.rasca.rascaapi.exceptions.EtRequestException;
 import org.apache.logging.log4j.util.Chars;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,8 @@ public class UserRepositoryImpl implements UserRepository{
             //Devolver id de usuario.
             return (Long) keyHolder.getKeys().get("IDPersona");
         }catch(Exception e){
-            throw new EtAuthException("Datos invalidos, fallo al crear cuenta");
+            //throw new EtRequestException("Datos invalidos, fallo al crear cuenta");
+            throw new EtRequestException(e.getMessage());
         }
     }
 
