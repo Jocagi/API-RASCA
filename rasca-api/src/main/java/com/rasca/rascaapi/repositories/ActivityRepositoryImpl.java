@@ -33,7 +33,7 @@ public class ActivityRepositoryImpl implements ActivityRepository{
     @Override
     public Activities encontrarPorID(String ID_Certificador, Long ID_Actividad) throws EtResourceNotFoundException {
         try{
-            return jdbcTemplate.queryForObject(SQL_ENCONTRAR_POR_ID,new Object[]{ID_Actividad,ID_Certificador},categoryRowMapper);
+            return jdbcTemplate.queryForObject(SQL_ENCONTRAR_POR_ID,new Object[]{ID_Actividad,ID_Certificador},activityRowMapper);
         }catch(Exception e){
 
         }
@@ -73,7 +73,18 @@ public class ActivityRepositoryImpl implements ActivityRepository{
 
     }
 
-    private RowMapper<Activities> categoryRowMapper = ((rs, rowNum)->{
-       return new Activities(rs.getLong("ID_Actividad"))
+    private RowMapper<Activities> activityRowMapper = ((rs, rowNum)->{
+       return new Activities(rs.getLong("ID_Actividad"),
+               rs.getString("Nombre"),
+               rs.getInt("Cupo"),
+               rs.getDate("Fecha_Inicio"),
+               rs.getString("Estado"),
+               rs.getString("Descripcion"),
+               rs.getInt("Horas_Otorgadas"),
+               rs.getString("R_Facultad"),
+               rs.getString("R_Year"),
+               rs.getString("R_Beca"),
+               rs.getString("ID_Certificador"),
+               rs.getLong("ID_Administrador"));
     });
 }
