@@ -14,9 +14,9 @@ public interface UserRepository {
 
     User findByID(Long IDPersona);
 
-    Long createStudent(Long IDPersona);
+    Long createStudent(Long IDPersona, String IDCarrera, String IDBeca);
 
-    String createApprover(Long IDPersona);
+    String createApprover(Long IDPersona, String IDCargo);
 
-    Long createAdministrator(Long IDPersona);
+    Long createAdministrator(Long IDPersona, String IDCargo);
 }

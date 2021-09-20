@@ -28,7 +28,7 @@ public class UserResource {
         String Correo = (String) userMap.get("Correo");
         String Contrasena = (String) userMap.get("Contrasena");
         User user = userService.validateUser(Correo,Contrasena);      
-        return new ResponseEntity<>(generateJWTToken(user), HttpStatus.OK);
+        return new ResponseEntity<>(generateJWTToken(user),HttpStatus.OK);
     }
 
         @PostMapping("/register")
@@ -43,8 +43,13 @@ public class UserResource {
         String Telefono = (String) userMap.get("Telefono");
         String Fotografia = (String) userMap.get("Fotografia");
         String Rol = (String)userMap.get("Rol");
-        User user = userService.registerUser(Correo, Contrasena, Usuario, Nombres, Apellidos, Carnet, FechaNac, Telefono, Fotografia, Rol);
-  return new ResponseEntity<>(generateJWTToken(user), HttpStatus.OK);
+        String IDCarrera = (String)userMap.get("IDCarrera");
+        String IDBeca = (String)userMap.get("IDBeca");
+        String IDCargo = (String)userMap.get("IDCargo");
+        User user = userService.registerUser(Correo, Contrasena, Usuario, Nombres, Apellidos, Carnet, FechaNac, Telefono, Fotografia, Rol, IDCarrera,IDBeca,IDCargo);
+        Map<String,String> map = new HashMap<>();
+        map.put("message", "Registrado exitosamente");
+  return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     private Map<String,String> generateJWTToken (User user){
