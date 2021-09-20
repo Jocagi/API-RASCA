@@ -18,11 +18,19 @@ import java.util.List;
 
 @Repository
 public class ActivityRepositoryImpl implements ActivityRepository{
+
     private static final String SQL_CREAR_ACTIVIDAD="INSERT INTO \"Actividad\"(\n" +
             "\t\"Nombre\", \"Cupo\", \"Fecha_Inicio\", \"Estado\", \"Descripcion\", \"Horas_Otorgadas\", \"R_Facultad\", \"R_Year\", \"R_Beca\", \"ID_Certificador\", \"ID_Administrador\")\n" +
             "\tVALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String SQL_ENCONTRAR_POR_ID="SELECT \"ID_Actividad\", \"Nombre\", \"Cupo\", \"Fecha_Inicio\", \"Estado\", \"Descripcion\", \"Horas_Otorgadas\", \"R_Facultad\", \"R_Year\", \"R_Beca\", \"ID_Certificador\", \"ID_Administrador\"\n" +
             "\tFROM \"Actividad\" WHERE \"ID_Actividad\" = ? AND \"ID_Certificador\" = ?;";
+    private static final String SQL_APROBAR_ACTIVIDAD="UPDATE \"Actividad\"\n" +
+            "SET \"Estado\"= 'A', \"ID_Administrador\" = ?\n" +
+            "WHERE \"ID_Actividad\" = ?;";
+    private static final String SQL_RECHAZAR_ACTIVIDAD="UPDATE \"Actividad\"\n" +
+            "SET \"Estado\"= 'R', \"ID_Administrador\" = ?\n" +
+            "WHERE \"ID_Actividad\" = ?;";
+
     @Autowired
     JdbcTemplate jdbcTemplate;
     @Override
@@ -71,6 +79,34 @@ public class ActivityRepositoryImpl implements ActivityRepository{
     @Override
     public void actualizarActividad(Long ID_Certificador, Long IDActividad, Activities Actividad) throws EtBadRequestException {
 
+    }
+
+    @Override
+    public void aprobarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException {
+        try{
+            jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(SQL_APROBAR_ACTIVIDAD);
+                ps.setLong(1, ID_Administrador);
+                ps.setLong(2, ID_Actividad);
+                return ps;
+            });
+        }catch (Exception e){
+            throw new EtBadRequestException("Solicitud Invalida: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void rechazarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException {
+        try{
+            jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(SQL_RECHAZAR_ACTIVIDAD);
+                ps.setLong(1, ID_Administrador);
+                ps.setLong(2, ID_Actividad);
+                return ps;
+            });
+        }catch (Exception e){
+            throw new EtBadRequestException("Solicitud Invalida: " + e.getMessage());
+        }
     }
 
     private RowMapper<Activities> activityRowMapper = ((rs, rowNum)->{

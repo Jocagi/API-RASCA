@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 @Transactional
 public class ActivityServiceImpl implements ActivityService{
+
     @Autowired
     ActivityRepository activityRepository;
     @Override
@@ -34,5 +35,15 @@ public class ActivityServiceImpl implements ActivityService{
     @Override
     public void actualizarActividad(Long ID_Certificador, Long IDActividad, Activities Actividad) throws EtBadRequestException {
 
+    }
+
+    @Override
+    public void aprobarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException {
+        activityRepository.aprobarActividad(ID_Actividad, ID_Administrador);
+    }
+
+    @Override
+    public void rechazarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException {
+        activityRepository.rechazarActividad(ID_Actividad, ID_Administrador);
     }
 }

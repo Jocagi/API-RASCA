@@ -15,4 +15,7 @@ public interface ActivityService {
 
     void actualizarActividad(Long ID_Certificador, Long IDActividad, Activities Actividad) throws EtBadRequestException;
 
+    void aprobarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+
+    void rechazarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
 }

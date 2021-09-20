@@ -14,4 +14,8 @@ public interface ActivityRepository {
     Long crearActividad (String Nombre, Integer Cupo, String Fecha_Inicio, String Descripcion, Integer Horas_Otorgadas, String R_Facultad, String R_Year, String R_Beca, String ID_Certificador, Long ID_Administrador) throws EtBadRequestException;
 
     void actualizarActividad(Long ID_Certificador, Long IDActividad, Activities Actividad) throws EtBadRequestException;
+
+    void aprobarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+
+    void rechazarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
 }
