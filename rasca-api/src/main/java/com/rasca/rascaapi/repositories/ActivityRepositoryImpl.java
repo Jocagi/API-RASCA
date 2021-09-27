@@ -1,6 +1,9 @@
 package com.rasca.rascaapi.repositories;
 
 import com.rasca.rascaapi.domain.Activities;
+import com.rasca.rascaapi.domain.Administrator;
+import com.rasca.rascaapi.domain.Approver;
+import com.rasca.rascaapi.domain.Student;
 import com.rasca.rascaapi.exceptions.EtBadRequestException;
 import com.rasca.rascaapi.exceptions.EtResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +26,22 @@ public class ActivityRepositoryImpl implements ActivityRepository{
             "\tVALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String SQL_ENCONTRAR_POR_ID="SELECT \"ID_Actividad\", \"Nombre\", \"Cupo\", \"Fecha_Inicio\", \"Estado\", \"Descripcion\", \"Horas_Otorgadas\", \"R_Facultad\", \"R_Year\", \"R_Beca\", \"ID_Certificador\", \"ID_Administrador\"\n" +
             "\tFROM \"Actividad\" WHERE \"ID_Actividad\" = ? AND \"ID_Certificador\" = ?;";
+    private static  String SQL_FIND_APPROVER_BY_IDPERSON = "SELECT \"IDCertificador\", \"IDCargo\"  +" +
+            "FROM \"Certificador\" WHERE \"IDPersona\" = ?";
+    private static  String SQL_FIND_ADMINISTRATOR_BY_IDPERSON = "SELECT \"IDAdministrador\", \"IDCargo\"  +" +
+            "FROM \"Administrador\" WHERE \"IDPersona\" = ?";
+    private static  String SQL_FIND_STUDENT_BY_IDPERSON = "SELECT \"IDEstudiante\", \"IDCarrera\", \"IDBeca\"  +" +
+            "FROM \"Estudiante\" WHERE \"IDPersona\" = ?";
+
     @Autowired
     JdbcTemplate jdbcTemplate;
     @Override
-    public List<Activities> obtenerActividades(String ID_Certificador) throws EtResourceNotFoundException {
+    public List<Activities> obtenerActividades(Long ID_Certificador) throws EtResourceNotFoundException {
         return null;
     }
 
     @Override
-    public Activities encontrarPorID(String ID_Certificador, Long ID_Actividad) throws EtResourceNotFoundException {
+    public Activities encontrarPorID(Long ID_Certificador, Long ID_Actividad) throws EtResourceNotFoundException {
         try{
             return jdbcTemplate.queryForObject(SQL_ENCONTRAR_POR_ID,new Object[]{ID_Actividad,ID_Certificador},activityRowMapper);
         }catch(Exception e){
@@ -41,7 +51,7 @@ public class ActivityRepositoryImpl implements ActivityRepository{
     }
 
     @Override
-    public Long crearActividad(String Nombre, Integer Cupo, String Fecha_Inicio, String Descripcion, Integer Horas_Otorgadas, String R_Facultad, String R_Year, String R_Beca, String ID_Certificador, Long ID_Administrador) throws EtBadRequestException {
+    public Long crearActividad(String Nombre, Integer Cupo, String Fecha_Inicio, String Descripcion, Integer Horas_Otorgadas, String R_Facultad, String R_Year, String R_Beca, Long ID_Certificador, Long ID_Administrador) throws EtBadRequestException {
         try{
             Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(Fecha_Inicio);
             java.sql.Date sqlDate = new java.sql.Date(date1.getTime());
@@ -58,7 +68,7 @@ public class ActivityRepositoryImpl implements ActivityRepository{
                 ps.setString(7,R_Facultad);
                 ps.setString(8,R_Year);
                 ps.setString(9,R_Beca);
-                ps.setString(10,ID_Certificador);
+                ps.setLong(10,ID_Certificador);
                 ps.setLong(11,ID_Administrador);
                 return ps;
             },keyHolder);
@@ -73,6 +83,22 @@ public class ActivityRepositoryImpl implements ActivityRepository{
 
     }
 
+
+   @Override
+    public Approver getApprover(Long IDPersona) {
+        return jdbcTemplate.queryForObject(SQL_FIND_APPROVER_BY_IDPERSON, new Object[]{IDPersona}, approverRowMapper);
+    }
+
+    @Override
+    public Student getStudent(Long IDPersona) {
+        return jdbcTemplate.queryForObject(SQL_FIND_STUDENT_BY_IDPERSON, new Object[]{IDPersona}, studentRowMapper);
+    }
+
+    @Override
+    public Administrator getAdministrator(Long IDPersona) {
+        return jdbcTemplate.queryForObject(SQL_FIND_ADMINISTRATOR_BY_IDPERSON, new Object[]{IDPersona}, administratorRowMapper);
+    }
+
     private RowMapper<Activities> activityRowMapper = ((rs, rowNum)->{
        return new Activities(rs.getLong("ID_Actividad"),
                rs.getString("Nombre"),
@@ -84,7 +110,23 @@ public class ActivityRepositoryImpl implements ActivityRepository{
                rs.getString("R_Facultad"),
                rs.getString("R_Year"),
                rs.getString("R_Beca"),
-               rs.getString("ID_Certificador"),
+               rs.getLong("ID_Certificador"),
                rs.getLong("ID_Administrador"));
     });
+    private RowMapper<Approver> approverRowMapper = ((rs, rowNum) -> {
+        return new Approver(rs.getLong("IDCertificador"),
+                rs.getLong("IDCargo"));
+    });
+
+    private RowMapper<Administrator> administratorRowMapper = ((rs, rowNum) -> {
+        return new Administrator(rs.getLong("IDAdministrador"),
+                rs.getLong("IDCargo"));
+    });
+
+    private RowMapper<Student> studentRowMapper = ((rs, rowNum) -> {
+        return new Student(rs.getLong("IDEstudiante"),
+                rs.getLong("IDCarrera"),
+                rs.getLong("IDBeca"));
+    });
 }
+
