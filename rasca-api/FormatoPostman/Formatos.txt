@@ -1,0 +1,41 @@
+-----------------------Registro-------------------------------
+http://localhost:8080/api/users/register
+
+{
+    "Correo": "ivan@rasca.com",
+    "Contrasena": "password",
+    "Usuario": "idavila",
+    "Nombres": "Ivan",
+    "Apellidos": "Davila",
+    "Carnet": "1160118",
+    "FechaNac": "23/08/1999",
+    "Telefono": "55361555",
+    "Fotografia": "-",
+    "Rol":"Administrador", --Estudiante o Certificador
+    "IDCarrera":"1",
+    "IDBeca":"2",
+    "IDCargo":"1"
+}
+
+---------------------LogIn---------------------------------
+http://localhost:8080/api/users/login
+{
+    "Correo": "eduardo@rasca.com",
+    "Contrasena": "password"
+}
+
+----------------------Crear Actividad----------------------
+http://localhost:8080/api/actividades/create
+En Pestaña "AUTORIZATION" selecciona en Type: Bearer Token
+Cologar el JWT brindado en el Login
+
+{
+    "Nombre":"Orquideario",
+    "Cupo":10,
+    "Fecha_Inicio":"10/10/2021",
+    "Descripcion":"Cuidado de plantas",
+    "Horas_Otorgadas":1,
+    "R_Facultad":"Pendiente",
+    "R_Year":"Pendiente",
+    "R_Beca":"Pendiente"
+}
