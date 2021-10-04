@@ -1,6 +1,8 @@
 package com.rasca.rascaapi.repositories;
 
+import com.rasca.rascaapi.domain.Administrator;
 import com.rasca.rascaapi.domain.Approver;
+import com.rasca.rascaapi.domain.Student;
 import com.rasca.rascaapi.domain.User;
 import com.rasca.rascaapi.exceptions.EtAuthException;
 import org.mindrot.jbcrypt.BCrypt;
@@ -35,6 +37,12 @@ public class UserRepositoryImpl implements UserRepository{
 
     private static  String SQL_CREATE_ADMINISTRATOR = "INSERT INTO \"Administrador\" (\"IDAdministrador\", \"IDPersona\", \"IDCargo\") VALUES(NEXTVAL('RASCA_ADMINISTRADO_SEQ'), ?, ?)";
 
+    private static  String SQL_FIND_APPROVER_BY_IDPERSON = "SELECT \"IDCertificador\", \"IDCargo\"  " +
+            "FROM \"Certificador\" WHERE \"IDPersona\" = ?";
+    private static  String SQL_FIND_ADMINISTRATOR_BY_IDPERSON = "SELECT \"IDAdministrador\", \"IDCargo\"  " +
+            "FROM \"Administrador\" WHERE \"IDPersona\" = ?";
+    private static  String SQL_FIND_STUDENT_BY_IDPERSON = "SELECT \"IDEstudiante\", \"IDCarrera\", \"IDBeca\"  " +
+            "FROM \"Estudiante\" WHERE \"IDPersona\" = ?";
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -160,5 +168,34 @@ public class UserRepositoryImpl implements UserRepository{
                 rs.getString("FechaNac"),
                 rs.getString("Telefono"),
                 rs.getString("Fotografia"));
+    });
+    @Override
+    public Approver getApprover(Long IDPersona) {
+        return jdbcTemplate.queryForObject(SQL_FIND_APPROVER_BY_IDPERSON, new Object[]{IDPersona}, approverRowMapper);
+    }
+
+    @Override
+    public Student getStudent(Long IDPersona) {
+        return jdbcTemplate.queryForObject(SQL_FIND_STUDENT_BY_IDPERSON, new Object[]{IDPersona}, studentRowMapper);
+    }
+
+    @Override
+    public Administrator getAdministrator(Long IDPersona) {
+        return jdbcTemplate.queryForObject(SQL_FIND_ADMINISTRATOR_BY_IDPERSON, new Object[]{IDPersona}, administratorRowMapper);
+    }
+    private RowMapper<Approver> approverRowMapper = ((rs, rowNum) -> {
+        return new Approver(rs.getLong("IDCertificador"),
+                rs.getLong("IDCargo"));
+    });
+
+    private RowMapper<Administrator> administratorRowMapper = ((rs, rowNum) -> {
+        return new Administrator(rs.getLong("IDAdministrador"),
+                rs.getLong("IDCargo"));
+    });
+
+    private RowMapper<Student> studentRowMapper = ((rs, rowNum) -> {
+        return new Student(rs.getLong("IDEstudiante"),
+                rs.getLong("IDCarrera"),
+                rs.getLong("IDBeca"));
     });
    }
