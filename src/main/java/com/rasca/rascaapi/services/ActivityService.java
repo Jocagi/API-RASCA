@@ -26,4 +26,6 @@ public interface ActivityService {
 
     void rechazarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
 
+    void cancelarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+
 }

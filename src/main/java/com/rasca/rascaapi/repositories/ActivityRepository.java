@@ -27,4 +27,6 @@ public interface ActivityRepository {
     void aprobarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
 
     void rechazarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+
+    void cancelarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
 }

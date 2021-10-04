@@ -68,4 +68,17 @@ public class ActivityResource {
         map.put("message", "Actividad rechazada");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
+    @PostMapping("/cancel")
+    public ResponseEntity<Map<String,String>> cancel(HttpServletRequest request, @RequestBody Map<String,Object> categoryMap) {
+        //TODO: Obtener ID de administrador del header
+        int IDPersona = (int) request.getAttribute("IDPersona");
+        long ID_Administrador = 1; //TODO
+        long ID_Actividad = (int) categoryMap.get("IDActividad");
+        activityService.rechazarActividad(ID_Actividad, ID_Administrador);
+        Map<String,String> map = new HashMap<>();
+        map.put("status", String.valueOf(HttpStatus.OK));
+        map.put("message", "Actividad rechazada");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
 }

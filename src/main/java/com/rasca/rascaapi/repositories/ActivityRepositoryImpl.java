@@ -33,6 +33,9 @@ public class ActivityRepositoryImpl implements ActivityRepository{
     private static final String SQL_RECHAZAR_ACTIVIDAD="UPDATE \"Actividad\"\n" +
             "SET \"Estado\"= 'R', \"ID_Administrador\" = ?\n" +
             "WHERE \"ID_Actividad\" = ?;";
+    private static final String SQL_CANCELAR_ACTIVIDAD="UPDATE \"Actividad\"\n" +
+            "SET \"Estado\"= 'C', \"ID_Administrador\" = ?\n" +
+            "WHERE \"ID_Actividad\" = ?;";
 
     private static  String SQL_FIND_APPROVER_BY_IDPERSON = "SELECT \"IDCertificador\", \"IDCargo\"  +" +
             "FROM \"Certificador\" WHERE \"IDPersona\" = ?";
@@ -110,6 +113,20 @@ public class ActivityRepositoryImpl implements ActivityRepository{
         try{
             jdbcTemplate.update(connection -> {
                 PreparedStatement ps = connection.prepareStatement(SQL_RECHAZAR_ACTIVIDAD);
+                ps.setLong(1, ID_Administrador);
+                ps.setLong(2, ID_Actividad);
+                return ps;
+            });
+        }catch (Exception e){
+            throw new EtBadRequestException("Solicitud Invalida: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void cancelarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException {
+        try{
+            jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(SQL_CANCELAR_ACTIVIDAD);
                 ps.setLong(1, ID_Administrador);
                 ps.setLong(2, ID_Actividad);
                 return ps;

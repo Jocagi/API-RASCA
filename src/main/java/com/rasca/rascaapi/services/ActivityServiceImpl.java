@@ -52,6 +52,11 @@ public class ActivityServiceImpl implements ActivityService{
     }
 
     @Override
+    public void cancelarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException {
+        activityRepository.cancelarActividad(ID_Actividad, ID_Administrador);
+    }
+
+    @Override
     public Approver obtenerCertificador(Long IDPerson) throws EtResourceNotFoundException {
             return activityRepository.getApprover(IDPerson);
     }
