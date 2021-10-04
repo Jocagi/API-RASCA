@@ -22,4 +22,8 @@ public interface ActivityService {
     Administrator obtenerAdministrador (Long IDPerson)throws EtResourceNotFoundException;
     Student obtenerEstudiante (Long IDPerson)throws EtResourceNotFoundException;
 
+    void aprobarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+
+    void rechazarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+
 }

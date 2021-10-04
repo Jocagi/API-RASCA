@@ -39,7 +39,7 @@ public class AuthFilter extends GenericFilterBean {
                 return;
             }
         }else{
-            httpResponse.sendError(HttpStatus.FORBIDDEN.value(), "Token de autorizacion debe de ser ingesado");
+            httpResponse.sendError(HttpStatus.FORBIDDEN.value(), "Token de autorizacion debe de ser ingresado");
             return;
         }
         filterChain.doFilter(servletRequest,servletResponse);

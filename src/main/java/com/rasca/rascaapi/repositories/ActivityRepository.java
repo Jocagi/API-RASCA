@@ -23,4 +23,8 @@ public interface ActivityRepository {
     Student  getStudent(Long IDPersona);
 
     Administrator getAdministrator(Long IDPersona);
+
+    void aprobarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+
+    void rechazarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
 }

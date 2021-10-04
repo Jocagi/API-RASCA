@@ -3,6 +3,8 @@ package com.rasca.rascaapi.repositories;
 import com.rasca.rascaapi.domain.Approver;
 import com.rasca.rascaapi.domain.User;
 import com.rasca.rascaapi.exceptions.EtAuthException;
+import com.rasca.rascaapi.exceptions.EtRequestException;
+import org.apache.logging.log4j.util.Chars;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository{
     //String de query de CANTIDAD DE USUARIOS a base de datos
     private static  String SQL_COUNT_BY_EMAIL = "SELECT COUNT(*) FROM \"Persona\" WHERE \"Correo\" = ?";
     //String de query de BUSQUEDA DE USUARIO POR ID a base de datos
-
+    private static  String SQL_FIND_BY_ID = "SELECT \"IDPersona\", \"Correo\", \"Contrasena\", \"Usuario\", \"Nombres\", \"Apellidos\", \"Carnet\", \"FechaNac\", \"Telefono\", \"Fotografia\" FROM \"Persona\" WHERE \"IDPersona\" = ?";
     //String de query para BUSQUEDA DE USUARIO POR LOGIN en bd
     private static  String SQL_FIND_BY_EMAIL = "SELECT \"IDPersona\", \"Correo\", \"Contrasena\", \"Usuario\", \"Nombres\", \"Apellidos\", \"Carnet\", \"FechaNac\", \"Telefono\", \"Fotografia\" FROM \"Persona\" WHERE \"Correo\" = ?";
 
@@ -64,7 +66,8 @@ public class UserRepositoryImpl implements UserRepository{
             //Devolver id de usuario.
             return (Long) keyHolder.getKeys().get("IDPersona");
         }catch(Exception e){
-            throw new EtAuthException("Datos invalidos, fallo al crear cuenta");
+            //throw new EtRequestException("Datos invalidos, fallo al crear cuenta");
+            throw new EtRequestException(e.getMessage());
         }
     }
 
@@ -89,8 +92,8 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public User findByID(Long userId) {
-        //return jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[]{userId}, userRowMapper);
-        return null;
+
+        return jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[]{userId}, userRowMapper);
     }
 
     @Override
