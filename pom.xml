@@ -69,8 +69,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.5.4</version>
 				<configuration>
-					<mainClass>com.rasca.RascaApiApplication</mainClass>
+					<mainClass>com.rasca.rascaapi.RascaApiApplication</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
