@@ -34,7 +34,7 @@ public class ActivityRepositoryImpl implements ActivityRepository{
             "SET \"Estado\"= 'R', \"ID_Administrador\" = ?\n" +
             "WHERE \"ID_Actividad\" = ?;";
     private static final String SQL_CANCELAR_ACTIVIDAD="UPDATE \"Actividad\"\n" +
-            "SET \"Estado\"= 'C', \"ID_Administrador\" = ?\n" +
+            "SET \"Estado\"= 'E', \"ID_Administrador\" = ?\n" +
             "WHERE \"ID_Actividad\" = ?;";
 
     private static  String SQL_FIND_APPROVER_BY_IDPERSON = "SELECT \"IDCertificador\", \"IDCargo\"  +" +
