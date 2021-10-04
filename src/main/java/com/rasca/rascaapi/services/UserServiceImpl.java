@@ -1,7 +1,9 @@
 package com.rasca.rascaapi.services;
 
+import com.rasca.rascaapi.domain.Approver;
 import com.rasca.rascaapi.domain.User;
 import com.rasca.rascaapi.exceptions.EtAuthException;
+import com.rasca.rascaapi.exceptions.EtResourceNotFoundException;
 import com.rasca.rascaapi.exceptions.EtRequestException;
 import com.rasca.rascaapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,7 @@ public class UserServiceImpl implements UserService{
             Long IDEstudiante = userRepository.createStudent(IDPersona,IDCarrera,IDBeca);
         }
         else if (Rol.equals("Certificador")){
-            String IDCertificador = userRepository.createApprover(IDPersona,IDCargo);
+            Long IDCertificador = userRepository.createApprover(IDPersona,IDCargo);
         }
         else if(Rol.equals("Administrador")){
             Long IDAdministrador = userRepository.createAdministrator(IDPersona,IDCargo);

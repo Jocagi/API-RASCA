@@ -1,5 +1,6 @@
 package com.rasca.rascaapi.repositories;
 
+import com.rasca.rascaapi.domain.Approver;
 import com.rasca.rascaapi.domain.User;
 import com.rasca.rascaapi.exceptions.EtAuthException;
 import com.rasca.rascaapi.exceptions.EtRequestException;
@@ -7,7 +8,6 @@ import org.apache.logging.log4j.util.Chars;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -116,7 +116,7 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public String createApprover(Long IDPersona, String IDCargo) {
+    public Long createApprover(Long IDPersona, String IDCargo) {
         try{
             //Conexión a base de datos y preparación de query
             KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -127,7 +127,7 @@ public class UserRepositoryImpl implements UserRepository{
                 return ps;
             }, keyHolder);
             //Devolver id de usuario.
-            return (String) keyHolder.getKeys().get("IDCertificador");
+            return (Long) keyHolder.getKeys().get("IDCertificador");
         }catch(Exception e) {
             throw new EtAuthException("Datos invalidos, fallo al crear cuenta");
         }
@@ -164,4 +164,4 @@ public class UserRepositoryImpl implements UserRepository{
                 rs.getString("Telefono"),
                 rs.getString("Fotografia"));
     });
-}
+   }
