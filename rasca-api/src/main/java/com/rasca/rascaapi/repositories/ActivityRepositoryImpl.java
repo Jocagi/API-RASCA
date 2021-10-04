@@ -26,11 +26,11 @@ public class ActivityRepositoryImpl implements ActivityRepository{
             "\tVALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String SQL_ENCONTRAR_POR_ID="SELECT \"ID_Actividad\", \"Nombre\", \"Cupo\", \"Fecha_Inicio\", \"Estado\", \"Descripcion\", \"Horas_Otorgadas\", \"R_Facultad\", \"R_Year\", \"R_Beca\", \"ID_Certificador\", \"ID_Administrador\"\n" +
             "\tFROM \"Actividad\" WHERE \"ID_Actividad\" = ? AND \"ID_Certificador\" = ?;";
-    private static  String SQL_FIND_APPROVER_BY_IDPERSON = "SELECT \"IDCertificador\", \"IDCargo\"  +" +
+   private static  String SQL_FIND_APPROVER_BY_IDPERSON = "SELECT \"IDCertificador\", \"IDCargo\"  " +
             "FROM \"Certificador\" WHERE \"IDPersona\" = ?";
-    private static  String SQL_FIND_ADMINISTRATOR_BY_IDPERSON = "SELECT \"IDAdministrador\", \"IDCargo\"  +" +
+    private static  String SQL_FIND_ADMINISTRATOR_BY_IDPERSON = "SELECT \"IDAdministrador\", \"IDCargo\"  " +
             "FROM \"Administrador\" WHERE \"IDPersona\" = ?";
-    private static  String SQL_FIND_STUDENT_BY_IDPERSON = "SELECT \"IDEstudiante\", \"IDCarrera\", \"IDBeca\"  +" +
+    private static  String SQL_FIND_STUDENT_BY_IDPERSON = "SELECT \"IDEstudiante\", \"IDCarrera\", \"IDBeca\"  " +
             "FROM \"Estudiante\" WHERE \"IDPersona\" = ?";
 
     @Autowired
@@ -83,7 +83,6 @@ public class ActivityRepositoryImpl implements ActivityRepository{
 
     }
 
-
    @Override
     public Approver getApprover(Long IDPersona) {
         return jdbcTemplate.queryForObject(SQL_FIND_APPROVER_BY_IDPERSON, new Object[]{IDPersona}, approverRowMapper);
@@ -113,6 +112,7 @@ public class ActivityRepositoryImpl implements ActivityRepository{
                rs.getLong("ID_Certificador"),
                rs.getLong("ID_Administrador"));
     });
+
     private RowMapper<Approver> approverRowMapper = ((rs, rowNum) -> {
         return new Approver(rs.getLong("IDCertificador"),
                 rs.getLong("IDCargo"));
