@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
 public class RascaApiApplication {
@@ -21,6 +22,11 @@ public class RascaApiApplication {
 		//Pagina de actividades a Implementarse
 		registrationBean.addUrlPatterns("/api/actividades/*");
 		return registrationBean;
+	}
+
+	@RequestMapping("/")
+	public String home() {
+		return "Hello World!";
 	}
 }
 
