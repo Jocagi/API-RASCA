@@ -19,9 +19,10 @@ public class ActivityServiceImpl implements ActivityService{
 
     @Autowired
     ActivityRepository activityRepository;
+
     @Override
-    public List<Activities> obtenerActividades(Long ID_Certificador) {
-        return null;
+    public List<Activities> obtenerActividades(String Estado) {
+        return activityRepository.obtenerActividades(Estado);
     }
 
     @Override

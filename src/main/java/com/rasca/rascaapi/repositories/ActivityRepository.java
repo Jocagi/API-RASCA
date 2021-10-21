@@ -10,13 +10,14 @@ import com.rasca.rascaapi.exceptions.EtResourceNotFoundException;
 import java.util.List;
 
 public interface ActivityRepository {
-    List<Activities> obtenerActividades (Long ID_Certificador) throws EtResourceNotFoundException;
 
-    Activities encontrarPorID (Long ID_Certificador, Long ID_Actividad) throws EtResourceNotFoundException;
+    List<Activities> obtenerActividades (String Estado);
 
-    Long crearActividad (String Nombre, Integer Cupo, String Fecha_Inicio, String Descripcion, Integer Horas_Otorgadas, String R_Facultad, String R_Year, String R_Beca, Long ID_Certificador, Long ID_Administrador) throws EtBadRequestException;
+    Activities encontrarPorID (Long ID_Certificador, Long ID_Actividad);
 
-    void actualizarActividad(Long ID_Certificador, Long IDActividad, Activities Actividad) throws EtBadRequestException;
+    Long crearActividad (String Nombre, Integer Cupo, String Fecha_Inicio, String Descripcion, Integer Horas_Otorgadas, String R_Facultad, String R_Year, String R_Beca, Long ID_Certificador, Long ID_Administrador);
+
+    void actualizarActividad(Long ID_Certificador, Long IDActividad, Activities Actividad);
 
     Approver getApprover(Long IDPersona);
 
@@ -24,9 +25,10 @@ public interface ActivityRepository {
 
     Administrator getAdministrator(Long IDPersona);
 
-    void aprobarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+    void aprobarActividad(Long ID_Actividad, Long ID_Administrador);
 
-    void rechazarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+    void rechazarActividad(Long ID_Actividad, Long ID_Administrador);
 
-    void cancelarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+    void cancelarActividad(Long ID_Actividad, Long ID_Administrador);
+
 }
