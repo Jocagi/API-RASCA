@@ -10,20 +10,25 @@ import com.rasca.rascaapi.exceptions.EtResourceNotFoundException;
 import java.util.List;
 
 public interface ActivityService {
-    List<Activities> obtenerActividades(Long ID_Certificador);
 
-    Activities obtenerActividadPorID(Long ID_Certificador,Long IDActividad) throws EtResourceNotFoundException;
+    List<Activities> obtenerActividades(String Estado);
 
-    Activities agregaActividad (String Nombre,Integer Cupo,String Fecha_Inicio,String Descripcion,Integer Horas_Otorgadas,String R_Facultad,String R_Year,String R_Beca,Long ID_Certificador,Long ID_Administrador) throws EtBadRequestException;
+    Activities obtenerActividadPorID(Long ID_Certificador,Long IDActividad);
 
-    void actualizarActividad(Long ID_Certificador, Long IDActividad, Activities Actividad) throws EtBadRequestException;
+    Activities agregaActividad (String Nombre,Integer Cupo,String Fecha_Inicio,String Descripcion,Integer Horas_Otorgadas,String R_Facultad,String R_Year,String R_Beca,Long ID_Certificador,Long ID_Administrador);
 
-    Approver obtenerCertificador (Long IDPerson)throws EtResourceNotFoundException;
-    Administrator obtenerAdministrador (Long IDPerson)throws EtResourceNotFoundException;
-    Student obtenerEstudiante (Long IDPerson)throws EtResourceNotFoundException;
+    void actualizarActividad(Long ID_Certificador, Long IDActividad, Activities Actividad);
 
-    void aprobarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+    Approver obtenerCertificador (Long IDPerson);
 
-    void rechazarActividad(Long ID_Actividad, Long ID_Administrador) throws EtBadRequestException;
+    Administrator obtenerAdministrador (Long IDPerson);
+
+    Student obtenerEstudiante (Long IDPerson);
+
+    void aprobarActividad(Long ID_Actividad, Long ID_Administrador);
+
+    void rechazarActividad(Long ID_Actividad, Long ID_Administrador);
+
+    void cancelarActividad(Long ID_Actividad, Long ID_Administrador);
 
 }

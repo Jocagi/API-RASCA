@@ -1,6 +1,8 @@
 package com.rasca.rascaapi.services;
 
+import com.rasca.rascaapi.domain.Administrator;
 import com.rasca.rascaapi.domain.Approver;
+import com.rasca.rascaapi.domain.Student;
 import com.rasca.rascaapi.domain.User;
 import com.rasca.rascaapi.exceptions.EtAuthException;
 import com.rasca.rascaapi.exceptions.EtResourceNotFoundException;
@@ -49,5 +51,21 @@ public class UserServiceImpl implements UserService{
         }
 
         return userRepository.findByID(IDPersona);
+    }
+
+
+    @Override
+    public Approver obtenerCertificador(Long IDPerson) throws EtResourceNotFoundException {
+        return userRepository.getApprover(IDPerson);
+    }
+
+    @Override
+    public Administrator obtenerAdministrador(Long IDPerson) throws EtResourceNotFoundException {
+        return userRepository.getAdministrator(IDPerson);
+    }
+
+    @Override
+    public Student obtenerEstudiante(Long IDPerson) throws EtResourceNotFoundException {
+        return userRepository.getStudent(IDPerson);
     }
 }

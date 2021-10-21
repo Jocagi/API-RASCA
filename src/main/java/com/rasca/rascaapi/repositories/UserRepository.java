@@ -1,6 +1,8 @@
 package com.rasca.rascaapi.repositories;
 
+import com.rasca.rascaapi.domain.Administrator;
 import com.rasca.rascaapi.domain.Approver;
+import com.rasca.rascaapi.domain.Student;
 import com.rasca.rascaapi.domain.User;
 import com.rasca.rascaapi.exceptions.EtAuthException;
 
@@ -18,5 +20,11 @@ public interface UserRepository {
     Long createApprover(Long IDPersona, String IDCargo);
 
     Long createAdministrator(Long IDPersona, String IDCargo);
+
+    Approver getApprover(Long IDPersona);
+
+    Student getStudent(Long IDPersona);
+
+    Administrator getAdministrator(Long IDPersona);
 
 }
