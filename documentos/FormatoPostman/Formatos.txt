@@ -1,0 +1,69 @@
+-----------------------Registro-------------------------------
+http://localhost:8080/api/users/register
+
+{
+    "Correo": "ivan@rasca.com",
+    "Contrasena": "password",
+    "Usuario": "idavila",
+    "Nombres": "Ivan",
+    "Apellidos": "Davila",
+    "Carnet": "1160118",
+    "FechaNac": "23/08/1999",
+    "Telefono": "55361555",
+    "Fotografia": "-",
+    "Rol":"Administrador", --Estudiante o Certificador
+    "IDCarrera":"1",
+    "IDBeca":"2",
+    "IDCargo":"1"
+}
+
+---------------------Login---------------------------------
+http://localhost:8080/api/users/login
+{
+    "Correo": "eduardo@rasca.com",
+    "Contrasena": "password"
+}
+
+----------------------Crear Actividad----------------------
+http://localhost:8080/api/actividades/create
+En Pestaña "AUTORIZATION" selecciona en Type: Bearer Token
+Cologar el JWT brindado en el Login
+
+{
+    "Nombre":"Orquideario",
+    "Cupo":10,
+    "Fecha_Inicio":"10/10/2021",
+    "Descripcion":"Cuidado de plantas",
+    "Horas_Otorgadas":1,
+    "R_Facultad":"Pendiente",
+    "R_Year":"Pendiente",
+    "R_Beca":"Pendiente"
+}
+
+----------------------Aprobar Actividad----------------------
+localhost:8080/api/actividades/approve
+
+En Pestaña "AUTORIZATION" selecciona en Type: Bearer Token
+Cologar el JWT brindado en el Login
+
+{
+"IDActividad": 11
+}
+
+----------------------Rechazar Actividad----------------------
+localhost:8080/api/actividades/reject
+
+En Pestaña "AUTORIZATION" selecciona en Type: Bearer Token
+Cologar el JWT brindado en el Login
+
+{
+"IDActividad": 11
+}
+
+--------Listado Actividades pendientes de aprobación-----------
+localhost:8080/api/actividades/getPending
+
+En Pestaña "AUTORIZATION" selecciona en Type: Bearer Token
+Cologar el JWT brindado en el Login
+
+[Método GET] No requiere enviar nada en en Body
