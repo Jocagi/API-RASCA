@@ -3,6 +3,7 @@ package com.rasca.rascaapi.domain;
 import java.util.Date;
 
 public class Activities {
+
     private Long ID_Actividad;
     private String Nombre;
     private Integer Cupo;
@@ -13,10 +14,22 @@ public class Activities {
     private String R_Facultad;
     private String R_Year;
     private String R_Beca;
-    private String ID_Certificador;
-    private String ID_Administrador;
+    private Long ID_Certificador;
+    private Long ID_Administrador;
 
     public Activities(long id_actividad, String nombre, int cupo, java.sql.Date fecha_inicio, String estado, String descripcion, int horas_otorgadas, String r_facultad, String r_year, String r_beca, long id_certificador, long id_administrador) {
+        this.ID_Actividad = id_actividad;
+        this.Nombre = nombre;
+        this.Cupo = cupo;
+        this.Fecha_Inicio = fecha_inicio;
+        this.Estado = estado.charAt(0);
+        this.Descripcion = descripcion;
+        this.Horas_Otorgadas = horas_otorgadas;
+        this.R_Facultad = r_facultad;
+        this.R_Year = r_year;
+        this.R_Beca = r_beca;
+        this.ID_Certificador = id_certificador;
+        this.ID_Administrador = id_administrador;
     }
 
     public Long getID_Actividad() {
@@ -99,19 +112,19 @@ public class Activities {
         R_Beca = r_Beca;
     }
 
-    public String getID_Certificador() {
+    public Long getID_Certificador() {
         return ID_Certificador;
     }
 
-    public void setID_Certificador(String ID_Certificador) {
+    public void setID_Certificador(Long ID_Certificador) {
         this.ID_Certificador = ID_Certificador;
     }
 
-    public String getID_Administrador() {
+    public Long getID_Administrador() {
         return ID_Administrador;
     }
 
-    public void setID_Administrador(String ID_Administrador) {
+    public void setID_Administrador(Long ID_Administrador) {
         this.ID_Administrador = ID_Administrador;
     }
 }

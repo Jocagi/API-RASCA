@@ -10,17 +10,18 @@ import org.springframework.context.annotation.Bean;
 public class RascaApiApplication {
 
 	public static void main(String[] args) {
-
-		SpringApplication.run(RascaApiApplication.class, args);}
-		@Bean
-		public FilterRegistrationBean <AuthFilter> filterRegistrationBean() {
-			FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
-			AuthFilter authFilter = new AuthFilter();
-			registrationBean.setFilter(authFilter);
-			//Pagina de actividades a Implementarse
-			registrationBean.addUrlPatterns("/api/actividades/*");
-			return registrationBean;
-		}
+		SpringApplication.run(RascaApiApplication.class, args);
 	}
+
+	@Bean
+	public FilterRegistrationBean <AuthFilter> filterRegistrationBean() {
+		FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
+		AuthFilter authFilter = new AuthFilter();
+		registrationBean.setFilter(authFilter);
+		//Pagina de actividades a Implementarse
+		registrationBean.addUrlPatterns("/api/actividades/*");
+		return registrationBean;
+	}
+}
 
 

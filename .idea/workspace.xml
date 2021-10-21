@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08843d07-4512-4219-8b62-8f5134159532" name="Changes" comment="Actualización de documentación de formatos" />
+    <list default="true" id="08843d07-4512-4219-8b62-8f5134159532" name="Changes" comment="Cambio de directorios de proyecto" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,6 +76,7 @@
       <workItem from="1633566114917" duration="65000" />
       <workItem from="1634695142224" duration="1316000" />
       <workItem from="1634710119112" duration="10455000" />
+      <workItem from="1634784742178" duration="299000" />
     </task>
     <task id="LOCAL-00001" summary="Merge">
       <created>1633326915881</created>
@@ -119,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634780238176</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Cambio de directorios de proyecto">
+      <created>1634785031209</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1634785031209</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,6 +152,7 @@
     <MESSAGE value="Actualización estado de actividad &quot;cancelado&quot;" />
     <MESSAGE value="Obtener listado de actividades pendientes" />
     <MESSAGE value="Actualización de documentación de formatos" />
-    <option name="LAST_COMMIT_MESSAGE" value="Actualización de documentación de formatos" />
+    <MESSAGE value="Cambio de directorios de proyecto" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambio de directorios de proyecto" />
   </component>
 </project>

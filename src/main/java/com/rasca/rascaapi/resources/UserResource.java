@@ -31,7 +31,7 @@ public class UserResource {
         return new ResponseEntity<>(generateJWTToken(user),HttpStatus.OK);
     }
 
-        @PostMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<Map<String,String>> registerUser(@RequestBody Map<String,Object> userMap){
         String Correo = (String) userMap.get("Correo");
         String Contrasena = (String) userMap.get("Contrasena");
@@ -48,8 +48,9 @@ public class UserResource {
         String IDCargo = (String)userMap.get("IDCargo");
         User user = userService.registerUser(Correo, Contrasena, Usuario, Nombres, Apellidos, Carnet, FechaNac, Telefono, Fotografia, Rol, IDCarrera,IDBeca,IDCargo);
         Map<String,String> map = new HashMap<>();
+        map.put("status", String.valueOf(HttpStatus.OK));
         map.put("message", "Registrado exitosamente");
-  return new ResponseEntity<>(map, HttpStatus.OK);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     private Map<String,String> generateJWTToken (User user){

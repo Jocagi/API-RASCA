@@ -17,7 +17,7 @@ http://localhost:8080/api/users/register
     "IDCargo":"1"
 }
 
----------------------LogIn---------------------------------
+---------------------Login---------------------------------
 http://localhost:8080/api/users/login
 {
     "Correo": "eduardo@rasca.com",
@@ -39,3 +39,31 @@ Cologar el JWT brindado en el Login
     "R_Year":"Pendiente",
     "R_Beca":"Pendiente"
 }
+
+----------------------Aprobar Actividad----------------------
+localhost:8080/api/actividades/approve
+
+En Pestaña "AUTORIZATION" selecciona en Type: Bearer Token
+Cologar el JWT brindado en el Login
+
+{
+"IDActividad": 11
+}
+
+----------------------Rechazar Actividad----------------------
+localhost:8080/api/actividades/reject
+
+En Pestaña "AUTORIZATION" selecciona en Type: Bearer Token
+Cologar el JWT brindado en el Login
+
+{
+"IDActividad": 11
+}
+
+--------Listado Actividades pendientes de aprobación-----------
+localhost:8080/api/actividades/getPending
+
+En Pestaña "AUTORIZATION" selecciona en Type: Bearer Token
+Cologar el JWT brindado en el Login
+
+[Método GET] No requiere enviar nada en en Body
