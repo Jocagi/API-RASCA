@@ -96,7 +96,7 @@ public class ActivityRepositoryImpl implements ActivityRepository{
     @Override
     public Long crearActividad(String Nombre, Integer Cupo, String Fecha_Inicio, String Descripcion, Integer Horas_Otorgadas, String R_Facultad, String R_Year, String R_Beca, Long ID_Certificador, Long ID_Administrador) throws EtBadRequestException {
         try{
-            Date date1=new SimpleDateFormat("dd/mm/yyyy").parse(Fecha_Inicio);
+            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(Fecha_Inicio);
             java.sql.Date sqlDate = new java.sql.Date(date1.getTime());
 
             KeyHolder keyHolder = new GeneratedKeyHolder();
