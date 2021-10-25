@@ -29,25 +29,41 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User registerUser(String Correo, String Contrasena, String Usuario, String Nombres, String Apellidos, String Carnet, String FechaNac, String Telefono, String Fotografia, String Rol,String IDCarrera, String IDBeca, String IDCargo) throws EtAuthException {
-        Pattern pattern =Pattern.compile("^(.+)@(.+)$");
+        Long IDPersona;
+        Long IDEstudiante;
+        Long IDCertificador;
+        Long IDAdministrador;
+        Pattern pattern = Pattern.compile("^(.+)@(.+)$");
         if (Correo != null) Correo = Correo.toLowerCase();
         if(!pattern.matcher(Correo).matches())
             throw new EtRequestException("Email inválido");
         Long count = userRepository.getCountByEmail(Correo);
         if(count > 0)
             throw new EtRequestException("Email ya registrado");
-        Long IDPersona = userRepository.create(Correo,Contrasena,Usuario,Nombres,Apellidos,Carnet,FechaNac,Telefono,Fotografia);
         if(Rol.equals("Estudiante")) {
-            Long IDEstudiante = userRepository.createStudent(IDPersona,IDCarrera,IDBeca);
+            if (IDCarrera == null || IDCarrera.length() == 0){
+                throw new EtRequestException("IDCarrera Inválido");
+            }
+            if (IDBeca == null || IDBeca.length() == 0){
+                throw new EtRequestException("IDCarrera Inválido");
+            }
+            IDPersona = userRepository.create(Correo,Contrasena,Usuario,Nombres,Apellidos,Carnet,FechaNac,Telefono,Fotografia);
+            IDEstudiante = userRepository.createStudent(IDPersona,IDCarrera,IDBeca);
         }
-        else if (Rol.equals("Certificador")){
-            Long IDCertificador = userRepository.createApprover(IDPersona,IDCargo);
-        }
-        else if(Rol.equals("Administrador")){
-            Long IDAdministrador = userRepository.createAdministrator(IDPersona,IDCargo);
-        }
-        else{
-            throw new EtRequestException("Rol invalido");
+        else {
+            if (IDCargo == null || IDCargo.length() == 0){
+                throw new EtRequestException("IDCargo Inválido");
+            }
+            IDPersona = userRepository.create(Correo,Contrasena,Usuario,Nombres,Apellidos,Carnet,FechaNac,Telefono,Fotografia);
+            if (Rol.equals("Certificador")){
+                IDCertificador = userRepository.createApprover(IDPersona,IDCargo);
+            }
+            else if(Rol.equals("Administrador")){
+                IDAdministrador = userRepository.createAdministrator(IDPersona,IDCargo);
+            }
+            else{
+                throw new EtRequestException("Rol invalido");
+            }
         }
 
         return userRepository.findByID(IDPersona);
