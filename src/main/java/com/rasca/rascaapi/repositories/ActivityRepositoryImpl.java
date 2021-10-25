@@ -41,8 +41,8 @@ public class ActivityRepositoryImpl implements ActivityRepository{
             "SET \"Estado\"= 'E', \"ID_Administrador\" = ?\n" +
             "WHERE \"ID_Actividad\" = ?;";
 
-    private static  String SQL_FIND_APPROVER_BY_IDPERSON = "SELECT \"IDCertificador\", \"IDCargo\"  +" +
-            "\tFROM \"Actividad\" WHERE \"ID_Actividad\" = ? AND \"ID_Certificador\" = ?;";
+    private static  String SQL_FIND_APPROVER_BY_IDPERSON = "SELECT \"IDCertificador\", \"IDCargo\"  " +
+            "FROM \"Certificador\" WHERE \"IDPersona\" = ?";
     private static  String SQL_FIND_ADMINISTRATOR_BY_IDPERSON = "SELECT \"IDAdministrador\", \"IDCargo\"  " +
             "FROM \"Administrador\" WHERE \"IDPersona\" = ?";
     private static  String SQL_FIND_STUDENT_BY_IDPERSON = "SELECT \"IDEstudiante\", \"IDCarrera\", \"IDBeca\"  " +
