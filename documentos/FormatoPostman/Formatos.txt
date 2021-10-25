@@ -11,14 +11,15 @@ http://localhost:8080/api/users/register
     "FechaNac": "23/08/1999",
     "Telefono": "55361555",
     "Fotografia": "-",
-    "Rol":"Administrador", --Estudiante o Certificador
-    "IDCarrera":"1",
-    "IDBeca":"2",
-    "IDCargo":"1"
+    "Rol":"Administrador",  --!Estudiante o Certificador
+    "IDCarrera":"1",        --!Solo rol Estudiante
+    "IDBeca":"2",           --!Solo rol Estudiante
+    "IDCargo":"1"           --!Solo rol Certificador/Administrador
 }
 
 ---------------------Login---------------------------------
 http://localhost:8080/api/users/login
+
 {
     "Correo": "eduardo@rasca.com",
     "Contrasena": "password"
