@@ -26,5 +26,4 @@ public interface UserRepository {
     Student getStudent(Long IDPersona);
 
     Administrator getAdministrator(Long IDPersona);
-
 }

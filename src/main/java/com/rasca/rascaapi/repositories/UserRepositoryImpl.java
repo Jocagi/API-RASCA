@@ -23,21 +23,27 @@ import java.util.Date;
 @Repository
 public class UserRepositoryImpl implements UserRepository{
     //? = PARAMETRO
-    private static char doubleQuote = '"';
-    //String de query de insercion a base de datos
-    private static  String SQL_CREATE = "INSERT INTO \"Persona\" (\"IDPersona\", \"Correo\", \"Contrasena\", \"Usuario\", \"Nombres\", \"Apellidos\", \"Carnet\", \"FechaNac\", \"Telefono\", \"Fotografia\") VALUES(NEXTVAL('RASCA_USERS_SEQ'), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // String de query de insercion a base de datos
+    private static  String SQL_CREATE = "INSERT INTO \"Persona\" (\"IDPersona\", \"Correo\", \"Contrasena\", " +
+            "\"Usuario\", \"Nombres\", \"Apellidos\", \"Carnet\", \"FechaNac\", \"Telefono\", \"Fotografia\") " +
+            "VALUES(NEXTVAL('RASCA_USERS_SEQ'), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     //String de query de CANTIDAD DE USUARIOS a base de datos
     private static  String SQL_COUNT_BY_EMAIL = "SELECT COUNT(*) FROM \"Persona\" WHERE \"Correo\" = ?";
     //String de query de BUSQUEDA DE USUARIO POR ID a base de datos
-    private static  String SQL_FIND_BY_ID = "SELECT \"IDPersona\", \"Correo\", \"Contrasena\", \"Usuario\", \"Nombres\", \"Apellidos\", \"Carnet\", \"FechaNac\", \"Telefono\", \"Fotografia\" FROM \"Persona\" WHERE \"IDPersona\" = ?";
+    private static  String SQL_FIND_BY_ID = "SELECT \"IDPersona\", \"Correo\", \"Contrasena\", \"Usuario\", \"Nombres\", " +
+            "\"Apellidos\", \"Carnet\", \"FechaNac\", \"Telefono\", \"Fotografia\" FROM \"Persona\" WHERE \"IDPersona\" = ?";
     //String de query para BUSQUEDA DE USUARIO POR LOGIN en bd
-    private static  String SQL_FIND_BY_EMAIL = "SELECT \"IDPersona\", \"Correo\", \"Contrasena\", \"Usuario\", \"Nombres\", \"Apellidos\", \"Carnet\", \"FechaNac\", \"Telefono\", \"Fotografia\" FROM \"Persona\" WHERE \"Correo\" = ?";
+    private static  String SQL_FIND_BY_EMAIL = "SELECT \"IDPersona\", \"Correo\", \"Contrasena\", \"Usuario\", \"Nombres\", " +
+            "\"Apellidos\", \"Carnet\", \"FechaNac\", \"Telefono\", \"Fotografia\" FROM \"Persona\" WHERE \"Correo\" = ?";
 
-    private static  String SQL_CREATE_STUDENT = "INSERT INTO \"Estudiante\" (\"IDEstudiante\", \"IDPersona\", \"IDCarrera\", \"IDBeca\") VALUES(NEXTVAL('RASCA_ESTUDIANTE_SEQ'), ?, ?, ?)";
+    private static  String SQL_CREATE_STUDENT = "INSERT INTO \"Estudiante\" (\"IDEstudiante\", \"IDPersona\", \"IDCarrera\"," +
+            " \"IDBeca\") VALUES(NEXTVAL('RASCA_ESTUDIANTE_SEQ'), ?, ?, ?)";
 
-    private static  String SQL_CREATE_APPROVER = "INSERT INTO \"Certificador\" (\"IDCertificador\", \"IDCargo\", \"IDPersona\") VALUES(NEXTVAL('RASCA_CERTIFICADOR_SEQ'), ?, ?)";
+    private static  String SQL_CREATE_APPROVER = "INSERT INTO \"Certificador\" (\"IDCertificador\", \"IDCargo\", \"IDPersona\") " +
+            "VALUES(NEXTVAL('RASCA_CERTIFICADOR_SEQ'), ?, ?)";
 
-    private static  String SQL_CREATE_ADMINISTRATOR = "INSERT INTO \"Administrador\" (\"IDAdministrador\", \"IDPersona\", \"IDCargo\") VALUES(NEXTVAL('RASCA_ADMINISTRADO_SEQ'), ?, ?)";
+    private static  String SQL_CREATE_ADMINISTRATOR = "INSERT INTO \"Administrador\" (\"IDAdministrador\", \"IDPersona\", \"IDCargo\") " +
+            "VALUES(NEXTVAL('RASCA_ADMINISTRADO_SEQ'), ?, ?)";
 
     private static  String SQL_FIND_APPROVER_BY_IDPERSON = "SELECT \"IDCertificador\", \"IDCargo\"  " +
             "FROM \"Certificador\" WHERE \"IDPersona\" = ?";
@@ -45,6 +51,7 @@ public class UserRepositoryImpl implements UserRepository{
             "FROM \"Administrador\" WHERE \"IDPersona\" = ?";
     private static  String SQL_FIND_STUDENT_BY_IDPERSON = "SELECT \"IDEstudiante\", \"IDCarrera\", \"IDBeca\"  " +
             "FROM \"Estudiante\" WHERE \"IDPersona\" = ?";
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -186,6 +193,7 @@ public class UserRepositoryImpl implements UserRepository{
     public Administrator getAdministrator(Long IDPersona) {
         return jdbcTemplate.queryForObject(SQL_FIND_ADMINISTRATOR_BY_IDPERSON, new Object[]{IDPersona}, administratorRowMapper);
     }
+
     private RowMapper<Approver> approverRowMapper = ((rs, rowNum) -> {
         return new Approver(rs.getLong("IDCertificador"),
                 rs.getLong("IDCargo"));
