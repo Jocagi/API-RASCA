@@ -28,23 +28,14 @@ public class ActivityResource {
     @GetMapping("/getPending")
     public ResponseEntity<Object> getPending(HttpServletRequest request){
         List<Activities> entityList = activityService.obtenerActividades("P");
-        List<JSONObject> entities = new ArrayList<JSONObject>();
-        for (Activities n : entityList) {
-            JSONObject entity = new JSONObject();
-            entity.put("ID_Actividad", n.getID_Actividad());
-            entity.put("Nombre", n.getNombre());
-            entity.put("Cupo", n.getCupo());
-            entity.put("Fecha_Inicio", n.getFecha_Inicio());
-            entity.put("Estado", n.getEstado());
-            entity.put("Descripcion", n.getDescripcion());
-            entity.put("Horas_Otorgadas", n.getHoras_Otorgadas());
-            entity.put("R_Facultad", n.getR_Facultad());
-            entity.put("R_Year", n.getR_Year());
-            entity.put("R_Beca", n.getR_Beca());
-            entity.put("ID_Certificador", n.getID_Certificador());
-            entity.put("ID_Administrador", n.getID_Administrador());
-            entities.add(entity);
-        }
+        List<JSONObject> entities = convertActivitiesToJSON(entityList);
+        return new ResponseEntity<Object>(entities, HttpStatus.OK);
+    }
+
+    @GetMapping("/getApproved")
+    public ResponseEntity<Object> getApproved(HttpServletRequest request){
+        List<Activities> entityList = activityService.obtenerActividades("A");
+        List<JSONObject> entities = convertActivitiesToJSON(entityList);
         return new ResponseEntity<Object>(entities, HttpStatus.OK);
     }
 
@@ -66,9 +57,8 @@ public class ActivityResource {
 
     @PostMapping("/approve")
     public ResponseEntity<Map<String,String>> approve(HttpServletRequest request, @RequestBody Map<String,Object> categoryMap) {
-        //TODO: Obtener ID de administrador del header
-        int IDPersona = (int) request.getAttribute("IDPersona");
-        long ID_Administrador = 1; //TODO
+        long IDPersona = (int) request.getAttribute("IDPersona");
+        long ID_Administrador = activityService.obtenerAdministrador(IDPersona).getIDAdministrador();
         long ID_Actividad = (int) categoryMap.get("IDActividad");
         activityService.aprobarActividad(ID_Actividad, ID_Administrador);
         Map<String,String> map = new HashMap<>();
@@ -79,9 +69,8 @@ public class ActivityResource {
 
     @PostMapping("/reject")
     public ResponseEntity<Map<String,String>> reject(HttpServletRequest request, @RequestBody Map<String,Object> categoryMap) {
-        //TODO: Obtener ID de administrador del header
-        int IDPersona = (int) request.getAttribute("IDPersona");
-        long ID_Administrador = 1; //TODO
+        long IDPersona = (int) request.getAttribute("IDPersona");
+        long ID_Administrador = activityService.obtenerAdministrador(IDPersona).getIDAdministrador();
         long ID_Actividad = (int) categoryMap.get("IDActividad");
         activityService.rechazarActividad(ID_Actividad, ID_Administrador);
         Map<String,String> map = new HashMap<>();
@@ -92,15 +81,35 @@ public class ActivityResource {
 
     @PostMapping("/cancel")
     public ResponseEntity<Map<String,String>> cancel(HttpServletRequest request, @RequestBody Map<String,Object> categoryMap) {
-        //TODO: Obtener ID de administrador del header
-        int IDPersona = (int) request.getAttribute("IDPersona");
-        long ID_Administrador = 1; //TODO
+        long IDPersona = (int) request.getAttribute("IDPersona");
+        long ID_Administrador = activityService.obtenerAdministrador(IDPersona).getIDAdministrador();
         long ID_Actividad = (int) categoryMap.get("IDActividad");
         activityService.rechazarActividad(ID_Actividad, ID_Administrador);
         Map<String,String> map = new HashMap<>();
         map.put("status", String.valueOf(HttpStatus.OK));
         map.put("message", "Actividad rechazada");
         return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    private List<JSONObject> convertActivitiesToJSON(List<Activities> activity) {
+        List<JSONObject> entities = new ArrayList<JSONObject>();
+        for (Activities n : activity) {
+            JSONObject entity = new JSONObject();
+            entity.put("ID_Actividad", n.getID_Actividad());
+            entity.put("Nombre", n.getNombre());
+            entity.put("Cupo", n.getCupo());
+            entity.put("Fecha_Inicio", n.getFecha_Inicio());
+            entity.put("Estado", n.getEstado());
+            entity.put("Descripcion", n.getDescripcion());
+            entity.put("Horas_Otorgadas", n.getHoras_Otorgadas());
+            entity.put("R_Facultad", n.getR_Facultad());
+            entity.put("R_Year", n.getR_Year());
+            entity.put("R_Beca", n.getR_Beca());
+            entity.put("ID_Certificador", n.getID_Certificador());
+            entity.put("ID_Administrador", n.getID_Administrador());
+            entities.add(entity);
+        }
+        return entities;
     }
 
 }
