@@ -16,4 +16,6 @@ public interface UserService {
     Approver obtenerCertificador (Long IDPerson)throws EtResourceNotFoundException;
     Administrator obtenerAdministrador (Long IDPerson)throws EtResourceNotFoundException;
     Student obtenerEstudiante (Long IDPerson)throws EtResourceNotFoundException;
+
+    User obtenerInformacion (Long IDPersona) throws EtResourceNotFoundException;;
 }

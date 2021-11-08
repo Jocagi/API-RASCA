@@ -1,21 +1,19 @@
 package com.rasca.rascaapi.resources;
 
 import com.rasca.rascaapi.Constants;
+import com.rasca.rascaapi.domain.Activities;
 import com.rasca.rascaapi.domain.User;
 import com.rasca.rascaapi.services.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -51,6 +49,22 @@ public class UserResource {
         map.put("status", String.valueOf(HttpStatus.OK));
         map.put("message", "Registrado exitosamente");
         return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @GetMapping("/information")
+    public ResponseEntity<Object> getInfo(HttpServletRequest request){
+        int IDPersona = (int) request.getAttribute("IDPersona");
+        User informacionUsuario = userService.obtenerInformacion(Long.valueOf(IDPersona));
+        JSONObject entity = new JSONObject();
+        entity.put("Correo", informacionUsuario.getCorreo());
+        entity.put("Usuario", informacionUsuario.getUsuario());
+        entity.put("Nombres", informacionUsuario.getNombres());
+        entity.put("Apellidos", informacionUsuario.getApellidos());
+        entity.put("Carnet", informacionUsuario.getCarnet());
+        entity.put("FechaNacimiento", informacionUsuario.getFechaNac());
+        entity.put("Telefono", informacionUsuario.getTelefono());
+        entity.put("Fotografia", informacionUsuario.getFotografia());
+        return new ResponseEntity<Object>(entity, HttpStatus.OK);
     }
 
     private Map<String,String> generateJWTToken (User user){
