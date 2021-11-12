@@ -1,10 +1,11 @@
-package com.rasca.rascaapi.resources;
+package com.rasca.rascaapi;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.rasca.rascaapi.RascaApiApplication;
 
 import com.rasca.rascaapi.domain.User;
+import com.rasca.rascaapi.resources.UserResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -39,10 +40,10 @@ public class TestUsers{
     @Test
     public void testRegister() throws Exception{
         Map<String,Object> map = Map.ofEntries(
-                Map.entry("Correo","try2@rasca.com"),
+                Map.entry("Correo","try5@rasca.com"),
                 Map.entry("Contrasena", "password"),
-                Map.entry("Usuario", "tray2"),
-                Map.entry("Nombres", "Raymond"),
+                Map.entry("Usuario", "tray5"),
+                Map.entry("Nombres", "Kevin"),
                 Map.entry("Apellidos", "Holt"),
                 Map.entry("Carnet", "1160118"),
                 Map.entry("FechaNac", "23/08/1999"),
@@ -71,10 +72,34 @@ public class TestUsers{
 
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/api/users/information"),
-                HttpMethod.GET, entity, String.class);assertTrue(response.getStatusCode().is2xxSuccessful());
+                HttpMethod.GET, entity, String.class);
+        assertTrue(response.getStatusCode().is2xxSuccessful());
         String expected = "{\"Correo\":\"eduardo@rasca.com\",\"Usuario\":\"edavila\",\"Nombres\":\"Eduardo\",\"Apellidos\":\"Davila\",\"Carnet\":\"1160118\",\"FechaNacimiento\":\"1999-08-23\",\"Telefono\":\"55361555\",\"Fotografia\":\"-\"}";
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }
+
+    @Test
+    public void testCreateActivity() throws Exception{
+        User user = new User(48L,"eduardo@rasca.com","","","","","1160118","","","");
+        UserResource userResource = new UserResource();
+        Map<String,String> token = userResource.generateJWTToken(user);
+        headers.add("Authorization", "Bearer " + token.get("token"));
+        Map<String,Object> map = Map.of("Nombre","Unit Testing 2",
+                "Cupo",10,
+                "Fecha_Inicio","10/10/2021",
+                "Descripcion","",
+                "Horas_Otorgadas",0,
+                "R_Facultad","Pendiente",
+                "R_Year","Pendiente",
+                "R_Beca","Pendiente");
+        HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(map, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/api/actividades/create"),
+                HttpMethod.POST, entity, String.class);
+        assertTrue(response.getStatusCode().is2xxSuccessful());
+    }
+
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
     }
