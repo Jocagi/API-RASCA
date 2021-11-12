@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.rasca.rascaapi.RascaApiApplication;
 
+import com.rasca.rascaapi.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -58,6 +60,20 @@ public class TestUsers{
                 HttpMethod.POST, entity, String.class);
         assertTrue(response.getStatusCode().is2xxSuccessful());
         assertTrue(response.getBody().contains("Registrado exitosamente"));
+    }
+    @Test
+    public void testInformation() throws Exception{
+        User user = new User(48L,"eduardo@rasca.com","","","","","1160118","","","");
+        UserResource userResource = new UserResource();
+        Map<String,String> map = userResource.generateJWTToken(user);
+        headers.add("Authorization", "Bearer " + map.get("token"));
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/api/users/information"),
+                HttpMethod.GET, entity, String.class);assertTrue(response.getStatusCode().is2xxSuccessful());
+        String expected = "{\"Correo\":\"eduardo@rasca.com\",\"Usuario\":\"edavila\",\"Nombres\":\"Eduardo\",\"Apellidos\":\"Davila\",\"Carnet\":\"1160118\",\"FechaNacimiento\":\"1999-08-23\",\"Telefono\":\"55361555\",\"Fotografia\":\"-\"}";
+        JSONAssert.assertEquals(expected, response.getBody(), false);
     }
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
