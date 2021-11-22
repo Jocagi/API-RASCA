@@ -89,6 +89,7 @@ public class ActivityRepositoryImpl implements ActivityRepository{
         try{
             return jdbcTemplate.queryForObject(SQL_ENCONTRAR_POR_ID,new Object[]{ID_Actividad,ID_Certificador},activityRowMapper);
         }catch(Exception e){
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -171,17 +172,32 @@ public class ActivityRepositoryImpl implements ActivityRepository{
 
    @Override
     public Approver getApprover(Long IDPersona) {
-        return jdbcTemplate.queryForObject(SQL_FIND_APPROVER_BY_IDPERSON, new Object[]{IDPersona}, approverRowMapper);
+       try{
+           return jdbcTemplate.queryForObject(SQL_FIND_APPROVER_BY_IDPERSON, new Object[]{IDPersona}, approverRowMapper);
+       }catch(Exception e){
+           System.out.println(e.getMessage());
+           return null;
+       }
     }
 
     @Override
     public Student getStudent(Long IDPersona) {
-        return jdbcTemplate.queryForObject(SQL_FIND_STUDENT_BY_IDPERSON, new Object[]{IDPersona}, studentRowMapper);
+        try{
+            return jdbcTemplate.queryForObject(SQL_FIND_STUDENT_BY_IDPERSON, new Object[]{IDPersona}, studentRowMapper);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
     public Administrator getAdministrator(Long IDPersona) {
-        return jdbcTemplate.queryForObject(SQL_FIND_ADMINISTRATOR_BY_IDPERSON, new Object[]{IDPersona}, administratorRowMapper);
+        try{
+            return jdbcTemplate.queryForObject(SQL_FIND_ADMINISTRATOR_BY_IDPERSON, new Object[]{IDPersona}, administratorRowMapper);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     private RowMapper<Activities> activityRowMapper = ((rs, rowNum)->{
