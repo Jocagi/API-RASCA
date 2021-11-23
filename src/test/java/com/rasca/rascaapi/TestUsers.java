@@ -25,6 +25,16 @@ public class TestUsers{
 
     TestRestTemplate restTemplate = new TestRestTemplate();
     HttpHeaders headers = new HttpHeaders();
+
+    @Test
+    public void testMain() throws Exception{
+        HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/"),
+                HttpMethod.GET, entity, String.class);
+        assertTrue(response.getStatusCode().is2xxSuccessful());
+    }
+
     @Test
     public void testLogin() throws Exception{
         Map<String,Object> map = Map.of("Correo","eduardo@rasca.com","Contrasena","password");
@@ -37,15 +47,25 @@ public class TestUsers{
         assertTrue(response.getStatusCode().is2xxSuccessful());
         assertTrue(response.getBody().contains("token"));
     }
+
+    @Test
+    public void testToken() throws Exception{
+        User user = new User(48L,"eduardo@rasca.com","","","","","1160118","","","");
+        UserResource userResource = new UserResource();
+        Map<String,String> map = userResource.generateJWTToken(user);
+        map.containsKey("token");
+    }
+
     @Test
     public void testRegister() throws Exception{
+        long num = System.currentTimeMillis();
         Map<String,Object> map = Map.ofEntries(
-                Map.entry("Correo","try5@rasca.com"),
+                Map.entry("Correo","try" + num +"@rasca.com"),
                 Map.entry("Contrasena", "password"),
-                Map.entry("Usuario", "tray5"),
+                Map.entry("Usuario", "tray" + num),
                 Map.entry("Nombres", "Kevin"),
                 Map.entry("Apellidos", "Holt"),
-                Map.entry("Carnet", "1160118"),
+                Map.entry("Carnet",  num + "18"),
                 Map.entry("FechaNac", "23/08/1999"),
                 Map.entry("Telefono", "55361555"),
                 Map.entry("Fotografia", "-"),
@@ -62,6 +82,7 @@ public class TestUsers{
         assertTrue(response.getStatusCode().is2xxSuccessful());
         assertTrue(response.getBody().contains("Registrado exitosamente"));
     }
+
     @Test
     public void testInformation() throws Exception{
         User user = new User(48L,"eduardo@rasca.com","","","","","1160118","","","");
@@ -97,6 +118,70 @@ public class TestUsers{
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/api/actividades/create"),
                 HttpMethod.POST, entity, String.class);
+        assertTrue(response.getStatusCode().is2xxSuccessful());
+    }
+
+    @Test
+    public void testApproveActivity() throws Exception{
+        User user = new User(100L,"admin@rasca.com","","","","","1160118","","","");
+        UserResource userResource = new UserResource();
+        Map<String,String> token = userResource.generateJWTToken(user);
+        headers.add("Authorization", "Bearer " + token.get("token"));
+        Map<String,Object> map = Map.of(
+                "IDActividad",20
+        );
+        HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(map, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/api/actividades/approve"),
+                HttpMethod.POST, entity, String.class);
+        assertTrue(response.getStatusCode().is2xxSuccessful());
+    }
+
+    @Test
+    public void testRejectActivity() throws Exception{
+        User user = new User(100L,"admin@rasca.com","","","","","1160118","","","");
+        UserResource userResource = new UserResource();
+        Map<String,String> token = userResource.generateJWTToken(user);
+        headers.add("Authorization", "Bearer " + token.get("token"));
+        Map<String,Object> map = Map.of(
+                "IDActividad",20
+        );
+        HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(map, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/api/actividades/reject"),
+                HttpMethod.POST, entity, String.class);
+        assertTrue(response.getStatusCode().is2xxSuccessful());
+    }
+
+    @Test
+    public void testGetPendingActivities() throws Exception{
+        User user = new User(100L,"admin@rasca.com","","","","","1160118","","","");
+        UserResource userResource = new UserResource();
+        Map<String,String> token = userResource.generateJWTToken(user);
+        headers.add("Authorization", "Bearer " + token.get("token"));
+
+        HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/api/actividades/getPending"),
+                HttpMethod.GET, entity, String.class);
+        assertTrue(response.getStatusCode().is2xxSuccessful());
+    }
+
+    @Test
+    public void testGetApprovedActivities() throws Exception{
+        User user = new User(100L,"admin@rasca.com","","","","","1160118","","","");
+        UserResource userResource = new UserResource();
+        Map<String,String> token = userResource.generateJWTToken(user);
+        headers.add("Authorization", "Bearer " + token.get("token"));
+
+        HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/api/actividades/getApproved"),
+                HttpMethod.GET, entity, String.class);
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
