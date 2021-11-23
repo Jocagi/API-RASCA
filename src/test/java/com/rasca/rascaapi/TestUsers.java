@@ -34,7 +34,7 @@ public class TestUsers{
                 HttpMethod.GET, entity, String.class);
         assertTrue(response.getStatusCode().is2xxSuccessful());
     }
-
+/*
     @Test
     public void testLogin() throws Exception{
         Map<String,Object> map = Map.of("Correo","eduardo@rasca.com","Contrasena","password");
@@ -153,7 +153,7 @@ public class TestUsers{
                 createURLWithPort("/api/actividades/reject"),
                 HttpMethod.POST, entity, String.class);
         assertTrue(response.getStatusCode().is2xxSuccessful());
-    }
+    }*/
 
     @Test
     public void testGetPendingActivities() throws Exception{
