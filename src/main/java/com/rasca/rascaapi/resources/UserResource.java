@@ -5,7 +5,7 @@ import com.rasca.rascaapi.domain.Activities;
 import com.rasca.rascaapi.domain.User;
 import com.rasca.rascaapi.domain.Administrator;
 import com.rasca.rascaapi.domain.Approver;
-import com.rasca.rascaapi.domain.Student;}
+import com.rasca.rascaapi.domain.Student;
 import com.rasca.rascaapi.services.ActivityService;
 import com.rasca.rascaapi.services.UserService;
 import io.jsonwebtoken.Jwts;
