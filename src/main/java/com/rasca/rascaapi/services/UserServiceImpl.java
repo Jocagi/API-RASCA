@@ -84,4 +84,9 @@ public class UserServiceImpl implements UserService{
     public Student obtenerEstudiante(Long IDPerson) throws EtResourceNotFoundException {
         return userRepository.getStudent(IDPerson);
     }
+
+    @Override
+    public User obtenerInformacion(Long IDPersona) throws EtResourceNotFoundException {
+        return userRepository.findByID(IDPersona);
+    }
 }

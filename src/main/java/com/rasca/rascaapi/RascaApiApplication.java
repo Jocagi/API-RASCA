@@ -26,8 +26,8 @@ public class RascaApiApplication {
 		FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
 		AuthFilter authFilter = new AuthFilter();
 		registrationBean.setFilter(authFilter);
-		//Pagina de actividades a Implementarse
 		registrationBean.addUrlPatterns("/api/actividades/*");
+		registrationBean.addUrlPatterns("/api/users/information/*");
 		return registrationBean;
 	}
 }
