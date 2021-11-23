@@ -16,7 +16,7 @@ public class IndexResource {
     public ResponseEntity<Map<String,String>> home() {
         Map<String,String> map = new HashMap<>();
         map.put("status", String.valueOf(HttpStatus.OK));
-        map.put("message", "Hello World!");
+        map.put("message", "Hola Mundo, este es mi Proyecto de ISW1!");
         map.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
